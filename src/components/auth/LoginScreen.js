@@ -12,7 +12,7 @@ export const LoginScreen = () => {
 
 
     const [ formValues, handleInputChange ] = useForm({
-        email:'misleidy520@gmail.com',
+        email:'misleidy@gmail.com',
         password:'123456'
 
     })
@@ -20,8 +20,9 @@ export const LoginScreen = () => {
     const { email, password } = formValues;
 
     const handleLogin =(e) =>{
+        console.log(e);
         dispatch( startLoginEmailPassword( email, password ) );
-        e.prevenDefault();
+        //e.prevenDefault();
     }
 
 
@@ -33,7 +34,7 @@ export const LoginScreen = () => {
         <>
             <h3 className="auth__title">Login</h3>
 
-            <form onSubmit={handleLogin}>
+            <div>
 
                 <input
                     type="text"
@@ -56,9 +57,9 @@ export const LoginScreen = () => {
 
 
                 <button
-                    type="submit"
                     className="btn btn-primary btn-block"
                     disabled={ loading}
+                    onClick={handleLogin}
                 
                 >
                     Login
@@ -87,9 +88,7 @@ export const LoginScreen = () => {
                     >
                         Create new account
                     </Link>          
-            </form>
-
-
+            </div>
         </>
     )
 }
