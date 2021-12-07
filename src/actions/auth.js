@@ -1,4 +1,4 @@
-//import Swal from 'sweetalert2';
+import Swal from 'sweetalert2';
 
 
 import { googleAuthProvider} from '../firebase/firebase-config'
@@ -27,7 +27,8 @@ export const startLoginEmailPassword =  (email, password) =>{
         })
         .catch( e => {
             console.log(e);
-            dispatch( finishLoading() );    
+            dispatch( finishLoading() );   
+            Swal.fire('Error', e.message, 'error'); 
         });
             
         }catch (error) {
@@ -54,6 +55,7 @@ export const startRegisterWithEmailPasswordName = ( email, password, name) =>{
         })
         .catch(e => {
             console.log(e)
+            Swal.fire('Error', e.message, 'error'); 
         
         });
     }

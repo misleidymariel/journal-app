@@ -1,9 +1,8 @@
 
-
 import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore/lite';
-import { GoogleAuthProvider } from "firebase/auth";
 
+import { getFirestore } from 'firebase/firestore';
+import { GoogleAuthProvider } from "firebase/auth";
 
 
 
