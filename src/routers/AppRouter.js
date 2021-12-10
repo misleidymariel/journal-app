@@ -9,8 +9,8 @@ import {
   } from "react-router-dom";
 
 import { login } from '../actions/auth';
+import { startLoadingNotes } from '../actions/notes';
 import { JournalScreen } from '../components/journal/JournalScreen';
-import { loadNotes } from '../helpers/loadNotes';
 import { AuthRouter } from './AuthRouter';
 import { PrivateRoute } from './PrivateRoute';
 import { PublicRoute } from './PublicRoute';
@@ -27,13 +27,12 @@ export const AppRouter = () => {
 
         useEffect(()=> {
 
-            getAuth().onAuthStateChanged( (user) => {
+            getAuth().onAuthStateChanged( async (user) => {
 
-                if( user?.uid){
+                if( user?.uid) {
                     dispatch(login(user.uid, user.displayName))
-                    setIsLoggeIn( true)
-
-                    loadNotes( user.uid);
+                    setIsLoggeIn( true);
+                    dispatch( startLoadingNotes( user.uid ) ); 
 
                 } else {
                     setIsLoggeIn(false); 

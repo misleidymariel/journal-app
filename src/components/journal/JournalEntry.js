@@ -1,33 +1,59 @@
-import React from 'react'
+import React from 'react';
+import moment  from 'moment';
+import { useDispatch } from 'react-redux';
+import { activeNote } from '../../actions/notes';
 
-export const JournalEntry = () => {
+export const JournalEntry = ({id, date, title, body, url}) => {
+
+    const noteDate = moment(date);
+    const dispatch = useDispatch();
+
+
+    const handleEntryClick = () =>{
+
+        dispatch( 
+            activeNote( id, {
+                date, title, body, url
+
+            })
+
+        );
+    }
+   
     return (
-        <div className="journal__entry pointer">
+        <div 
+            className="journal__entry pointer"
+            onClick= {handleEntryClick}
+        >
+             
 
-            <div 
-                className="journal__entry-pinture"
-                style={{
-                    backgroundSize: 'cover',
-                    backgroundImage: 'url(https://escribirte.com.ar/wp-content/uploads/2020/01/Poemas-de-paiasjes-1.jpg?ezimgfmt=ng%3Awebp%2Fngcb1%2Frs%3Adevice%2Frscb1-1)'
+            {
+                url &&     
 
-                }}
-            ></div>
+                <div 
+                    className="journal__entry-pinture"
+                    style={{
+                        backgroundSize: 'cover',
+                        backgroundImage: `url(${ url})`
 
+                    }}
+                ></div>
+
+            }        
             <div className="journal__entry-body">
                 <p className="journal__entry-title">
-                    Un nuevo dia
+                    { title }
                 </p>
                 <p className="journal__entry-content">
-                    El planeta tierra es en sí mismo una de las grandes maravillas 
-                    del universo
+                   {body}
                     
                 </p>
 
             </div>
 
             <div className="journal__entry-date-box">
-                <span>Monday</span>
-                <h4>06</h4>
+                <span>{noteDate.format('dddd')}</span>
+                <h4>{noteDate.format('Do')}</h4>
 
             </div>
             
