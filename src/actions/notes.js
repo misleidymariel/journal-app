@@ -6,6 +6,7 @@ import { db } from "../firebase/firebase-config";
 import { doc, addDoc, collection, setDoc } from "firebase/firestore";
 import { types } from "../types/types";
 import { loadNotes } from "../helpers/loadNotes";
+import { fileUpload } from '../helpers/fileUpload';
 
 export const startNewNote = () => {
     return async( dispatch, getState) => {
@@ -24,8 +25,6 @@ export const startNewNote = () => {
 
         dispatch( activeNote( docRef.id, newNote));
         
-
- 
     }
 }
 
@@ -86,4 +85,37 @@ export const refreshNote = (id, note) => ({
         }
     }
 
-})
+});
+
+export const startUploading = (file) => {
+
+    return async ( dispatch, getState) =>{
+
+        const { active:activeNote } = getState().notes;
+
+        
+        let timerInterval
+        Swal.fire({
+        title: 'Auto close alert!',
+        html: 'I will close in <b></b> milliseconds.',
+        timerProgressBar: true,
+        didOpen: () => {
+            Swal.showLoading()
+            const b = Swal.getHtmlContainer().querySelector('b')
+            timerInterval = setInterval(() => {
+            b.textContent = Swal.getTimerLeft()
+            }, 100)
+        },
+        willClose: () => {
+            clearInterval(timerInterval)
+        }
+        })
+
+        const fileUrl = await fileUpload( file);
+
+        console.log(fileUrl);
+
+        Swal.close();
+
+    }
+}
