@@ -1,5 +1,8 @@
-import { db } from "../firebase/firebase-config";
+import Swal  from 'sweetalert2';
 
+//react-journal
+
+import { db } from "../firebase/firebase-config";
 import { doc, addDoc, collection, setDoc } from "firebase/firestore";
 import { types } from "../types/types";
 import { loadNotes } from "../helpers/loadNotes";
@@ -15,13 +18,12 @@ export const startNewNote = () => {
             date: new Date().getTime()
         }
 
-
         const notesRef = collection(db, uid, "journal", "notes");
-        const docRef = await aºddDoc(notesRef, newNote);
+        const docRef = await addDoc(notesRef, newNote);
 
-    
 
         dispatch( activeNote( docRef.id, newNote));
+        
 
  
     }
@@ -60,16 +62,28 @@ export const startSaveNote = (note) =>{
             delete note.url;
         }
 
-        const noteToFirestore = {...note};
-        //elimino el id
-        delete noteToFirestore.id;
+        const noteUpdate = {...note};
 
-        //const notesRef = collection(db, uid, "journal", "notes");
-        //const docRef = await addDoc(notesRef, newNote);
-         await doc(collection(db, uid, note.id, "jorunal","notes" )).update(noteToFirestore)
-        //await addDoc(notesRef).update(noteToFirestore)
-        //await doc( db,`${ uid}/journal/notes/${note.id}`).update(noteToFirestore)
+        const notesRef = await collection(db, uid, "journal", "notes");
+        const res = await doc(notesRef, note.id);
+        delete noteUpdate.id;
+        await setDoc(res, noteUpdate);
+
+        dispatch( refreshNote(note.id, noteUpdate));
+        Swal.fire('Saved', note.title, 'success');
+
     }
 
-
 }
+
+export const refreshNote = (id, note) => ({
+    type: types.notesUpdated,
+    payload:{
+        id, 
+        note: {
+            id,
+            ...note
+        }
+    }
+
+})
