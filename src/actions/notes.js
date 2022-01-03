@@ -3,7 +3,7 @@ import Swal  from 'sweetalert2';
 //react-journal
 
 import { db } from "../firebase/firebase-config";
-import { doc, addDoc, collection, setDoc } from "firebase/firestore";
+import { doc, addDoc, collection, setDoc, deleteDoc } from "firebase/firestore";
 import { types } from "../types/types";
 import { loadNotes } from "../helpers/loadNotes";
 import { fileUpload } from '../helpers/fileUpload';
@@ -21,7 +21,6 @@ export const startNewNote = () => {
 
         const notesRef = collection(db, uid, "journal", "notes");
         const docRef = await addDoc(notesRef, newNote);
-
 
         dispatch( activeNote( docRef.id, newNote));
         
@@ -96,15 +95,15 @@ export const startUploading = (file) => {
         
         let timerInterval
         Swal.fire({
-        title: 'Auto close alert!',
-        html: 'I will close in <b></b> milliseconds.',
+        title: 'Uploading...',
+        html: '<b></b> Please...',
         timerProgressBar: true,
         didOpen: () => {
             Swal.showLoading()
             const b = Swal.getHtmlContainer().querySelector('b')
             timerInterval = setInterval(() => {
             b.textContent = Swal.getTimerLeft()
-            }, 100)
+            },)
         },
         willClose: () => {
             clearInterval(timerInterval)
@@ -112,10 +111,34 @@ export const startUploading = (file) => {
         })
 
         const fileUrl = await fileUpload( file);
+        activeNote.url = fileUrl;
 
-        console.log(fileUrl);
+        dispatch( startSaveNote( activeNote) );
 
         Swal.close();
 
     }
 }
+
+export const startDeleting = ( id ) =>{
+    return async (dispatch, getState) =>{
+
+        const uid  = getState().auth.uid;
+
+        const notesRef = await collection(db, uid,  "journal", "notes");
+        const noteDoc = await doc(notesRef, id);
+
+        //delete firebase
+        await deleteDoc(noteDoc);
+
+        dispatch( deleteNote(id));
+
+    }
+
+}
+
+export const deleteNote = (id ) => ({
+    type: types.notesDelete,
+    payload: id
+
+})
