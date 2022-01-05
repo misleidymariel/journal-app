@@ -69,7 +69,7 @@ export const NoteScreen = () => {
                             <div className="notes__image">
                                 <img
                                     src={note.url}
-                                    alt="images playa"
+                                    alt="images"
                                 />
 
                             </div>
