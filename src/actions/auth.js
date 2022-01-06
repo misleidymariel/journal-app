@@ -7,6 +7,7 @@ import { types } from '../types/types';
 import { getAuth, signInWithPopup, GoogleAuthProvider, updateProfile } from "firebase/auth";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { finishLoading, starLoading } from './ui';
+import { noteLogout } from './notes';
 
 //actionn asincrona
 
@@ -103,6 +104,8 @@ export const startLogout =() => {
        await getAuth().signOut();
 
        dispatch( logout() );
+       dispatch( noteLogout() );
+
     }
 }
 

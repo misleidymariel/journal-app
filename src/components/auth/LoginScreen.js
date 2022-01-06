@@ -34,7 +34,9 @@ export const LoginScreen = () => {
         <>
             <h3 className="auth__title">Login</h3>
 
-            <div>
+            <div 
+                className="animate_animated animate_adeIn animate_faster"
+            >
 
                 <input
                     type="text"
