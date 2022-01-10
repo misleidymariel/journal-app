@@ -12,7 +12,7 @@
 
 */
 
-import Swal from "sweetalert2";
+//import Swal from "sweetalert2";
 import { types } from "../types/types";
 
 //reducer una funcion pura 
