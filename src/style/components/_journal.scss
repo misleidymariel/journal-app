@@ -1,6 +1,13 @@
 
 .journal__main-content{
     display: flex;
+
+    @media screen  and (max-width: 576px ){
+        display: flex;
+        flex-direction:column;
+        width: auto;
+    
+    }
 }
 
 .journal__sidebar{
@@ -12,6 +19,11 @@
     padding-left: 10px;
     padding-right: 10px;
     width: 550px;
+    @media screen  and (max-width: 576px ){
+        height: 400px;
+        padding: 0px;
+       
+     }
 
 }
 .journal__sidebar-navbar{
@@ -43,6 +55,10 @@
     margin-top: 15px;
     flex: 1 1 auto;
     //overflow-y: scroll;
+    @media screen  and (max-width: 576px ){
+        width: auto;
+       
+    }
 
 }
 
@@ -54,6 +70,10 @@
     justify-content: space-between;
     margin-bottom: 10px;
     overflow: hidden;
+    @media screen  and (max-width: 576px ){
+        width: auto;
+       
+    }
 
 }
 
