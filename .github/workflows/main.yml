@@ -15,9 +15,10 @@ jobs:
         with:
           persist-credentials: false
           submodules: true  # TODO remove this if not using submodules in Hexo
+      - name: setup node version
         uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: '12.18.4'
       - name: Install 🔧
         run: yarn install
 
