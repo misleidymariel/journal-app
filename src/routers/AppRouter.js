@@ -47,7 +47,7 @@ export const AppRouter = () => {
 
         if( checking){
             return (
-                <h1>Plis wait.. </h1>
+                <h1 className="wait__title"> Pliss wait... </h1>
             )
         }
 
